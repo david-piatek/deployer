@@ -1,0 +1,19 @@
+{
+    "name": "echomoon/deployer",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Piatek",
+            "email": "dav.piatek@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0",
+        "symfony/var-dumper": "^7.1",
+        "symfony/finder": "^7.1"
+    }
+}
