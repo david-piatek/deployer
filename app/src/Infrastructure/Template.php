@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Domain\Template as TemplateDomainInterface;
-use Symfony\Component\Finder\Finder;
+use App\Domain\Gateway\Template as TemplateDomainInterface;
 use Twig\Environment;
 
 class Template implements TemplateDomainInterface

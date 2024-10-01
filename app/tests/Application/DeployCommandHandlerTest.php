@@ -6,12 +6,15 @@ namespace Tests\App\Application;
 
 use App\Application\DeployCommand;
 use App\Application\DeployCommandHandler;
-use App\Domain\Template;
+use App\Domain\Gateway\Template;
+use App\Domain\Model\Supervisor;
 use PHPUnit\Framework\TestCase;
 
 final class DeployCommandHandlerTest extends TestCase
 {
-    public function testCanBeUsedAsString(): void
+    private Template $template;
+    private Supervisor $supervisor;
+    protected function setUp(): void
     {
         $template = new class implements Template {
             public function render(string $appName): string
@@ -19,9 +22,27 @@ final class DeployCommandHandlerTest extends TestCase
                 return $appName;
             }
         };
+
+        $this->supervisor = new class($template) extends Supervisor {
+            public function __construct(Template $template)
+            {
+                parent::__construct($template);
+            }
+
+            public function run(string $appName): string
+            {
+                return $appName;
+            }
+        };
+    }
+
+    public function testCanBeUsedAsString(): void
+    {
+
+
         $this->assertEquals(
-            (new DeployCommandHandler($template))->handle(new DeployCommand('ddd')),
-            'ddd'
+            (new DeployCommandHandler($this->supervisor))->handle(new DeployCommand('ddd')),
+            'dddd'
         );
     }
 }
