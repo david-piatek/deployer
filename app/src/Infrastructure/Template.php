@@ -7,9 +7,6 @@ namespace App\Infrastructure;
 use App\Domain\Template as TemplateDomainInterface;
 use Symfony\Component\Finder\Finder;
 use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class Template implements TemplateDomainInterface
 {

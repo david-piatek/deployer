@@ -9,22 +9,19 @@ use App\Application\DeployCommandHandler;
 use App\Domain\Template;
 use PHPUnit\Framework\TestCase;
 
-class DeployCommandHandlerTest extends TestCase
+final class DeployCommandHandlerTest extends TestCase
 {
-
-
     public function testCanBeUsedAsString(): void
     {
         $template = new class implements Template {
-
-            public function render(string $appName): string {
+            public function render(string $appName): string
+            {
                 return $appName;
             }
         };
         $this->assertEquals(
-            (new DeployCommandHandler($template))->handle(new DeployCommand("ddd")),
-            "ddd"
+            (new DeployCommandHandler($template))->handle(new DeployCommand('ddd')),
+            'ddd'
         );
     }
 }
-
