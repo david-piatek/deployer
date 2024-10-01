@@ -18,7 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class DeployAppCommand extends Command
 {
     public function __construct(
-        private readonly string $templatePath,
         private readonly DeployCommandHandler $handler,
     ) {
         parent::__construct();
@@ -26,7 +25,7 @@ class DeployAppCommand extends Command
 
     protected function configure(): void
     {
-        $this ->addArgument('app_name', InputArgument::REQUIRED, 'Application you want deploy.');
+        $this->addArgument('app_name', InputArgument::REQUIRED, 'Application you want deploy.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -36,7 +35,7 @@ class DeployAppCommand extends Command
         $this->handler->handle(
             new DeployCommand($appName)
         );
-        (new SymfonyStyle($input, $output))->title('Finish deploy.' . $appName);
+        (new SymfonyStyle($input, $output))->title('Finish deploy.'.$appName);
 
         return Command::SUCCESS;
     }

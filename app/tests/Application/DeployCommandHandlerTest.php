@@ -14,6 +14,7 @@ final class DeployCommandHandlerTest extends TestCase
 {
     private Template $template;
     private Supervisor $supervisor;
+
     protected function setUp(): void
     {
         $template = new class implements Template {
@@ -38,8 +39,6 @@ final class DeployCommandHandlerTest extends TestCase
 
     public function testCanBeUsedAsString(): void
     {
-
-
         $this->assertEquals(
             (new DeployCommandHandler($this->supervisor))->handle(new DeployCommand('ddd')),
             'dddd'
