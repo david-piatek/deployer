@@ -6,5 +6,8 @@ namespace App\Domain\Gateway;
 
 interface Template
 {
-    public function render(string $appName): string;
+    /**
+     * @param array<mixed> $context
+     */
+    public function render(string $filepath, array $context): string;
 }

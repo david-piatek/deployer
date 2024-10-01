@@ -21,14 +21,13 @@ class DeployCommandHandler
     {
         $templatePathApp = $this->templatePath.$command->appName;
         $this->fileSystem->unzip(
-            srcPath: $this->tmpPath.$command->appName.".zip",
+            srcPath: $this->tmpPath.$command->appName.'.zip',
             destPath: $templatePathApp
         );
-        dd($templatePathApp);
         foreach ($this->fileSystem->getFiles($templatePathApp) as $file) {
             $this->fileSystem->writeFile(
                 filepath: $file,
-                content: $this->template->render($file->getPathName(), ['nom' => 'ddd']),
+                content: $this->template->render($file, ['nom' => 'ddd']),
             );
         }
 

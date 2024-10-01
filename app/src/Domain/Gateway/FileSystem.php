@@ -6,7 +6,10 @@ namespace App\Domain\Gateway;
 
 interface FileSystem
 {
-    public function getFiles(string $dir): \Countable;
+    /**
+     * @return string[]
+     */
+    public function getFiles(string $dir): array;
 
     public function unzip(string $srcPath, string $destPath): void;
 

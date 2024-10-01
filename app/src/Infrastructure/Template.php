@@ -14,12 +14,9 @@ class Template implements TemplateDomainInterface
     ) {
     }
 
-    /**
-     * @param array<mixed> $context
-     */
-    public function render(string $filePath, array $context = []): string
+    public function render(string $filepath, array $context = []): string
     {
-        return $this->twig->render($filePath, $context);
+        return $this->twig->render($filepath, $context);
         // $finder = new Finder();
         // $finder->in($appTemplatePath)->depth('== 0');
         // foreach ($finder as $file) {

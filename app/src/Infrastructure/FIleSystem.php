@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Domain\Gateway\FIleSystem as FileSystemDomainInterface;
+use App\Domain\Gateway\FileSystem as FileSystemDomainInterface;
 use Symfony\Component\Finder\Finder;
-use ZipArchive;
 
 class FIleSystem implements FileSystemDomainInterface
 {
@@ -20,28 +19,25 @@ class FIleSystem implements FileSystemDomainInterface
     /**
      * @return string[]
      */
-    public function getFiles(string $appName): \Countable
+    public function getFiles(string $dir): array
     {
         /** @var string[] $result */
-        $result = $this->finder->in($appName)->depth('== 0');
+        $result = $this->finder->in($dir)->depth('== 0');
 
         return $result;
     }
 
     public function unzip(string $srcPath, string $destPath): void
     {
-
-        $zip = new ZipArchive;
+        $zip = new \ZipArchive();
         $res = $zip->open($srcPath);
-        if ($res === TRUE) {
+        if (true === $res) {
             $zip->extractTo($destPath);
             $zip->close();
         } else {
-            dd("doh");
-
+            throw new \Exception('Failed to open zip');
         }
-
-        }
+    }
 
     public function writeFile(string $filepath, string $content): void
     {
