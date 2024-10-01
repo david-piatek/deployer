@@ -24,8 +24,6 @@ class DeployAppCommand extends Command
         parent::__construct();
     }
 
-
-
     protected function configure(): void
     {
         $this
@@ -34,16 +32,18 @@ class DeployAppCommand extends Command
             // ...
         ;
     }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
         $io->title('Start deploying.');
+        /** @var string $appName */
+        $appName = $input->getArgument('app_name');
         $this->handler->handle(
-            new DeployCommand($input->getArgument('app_name'))
+            new DeployCommand($appName)
         );
-        $output->writeln('Username: '.$input->getArgument('app_name'));
-
+        $output->writeln('Username: '.$appName);
 
         // ... put here the code to create the user
         dump($this->templatePath);
