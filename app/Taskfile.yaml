@@ -34,7 +34,14 @@ tasks:
   phpunit:
     desc: Run unit test
     cmds:
-      - ./vendor/bin/phpunit tests
+      - ./vendor/bin/phpunit  tests
+
+  tests:
+    desc: Run all tests
+    deps:
+      - php-cs
+      - phpstan
+      - phpunit
 
   run:
     desc: Run application

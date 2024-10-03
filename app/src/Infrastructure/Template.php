@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure;
 
 use App\Domain\Gateway\Template as TemplateDomainInterface;
+use App\Domain\Model\Data;
 use Twig\Environment;
 
 class Template implements TemplateDomainInterface
@@ -14,9 +15,9 @@ class Template implements TemplateDomainInterface
     ) {
     }
 
-    public function render(string $filepath, array $context = []): string
+    public function render(string $templateName, Data $data): string
     {
-        return $this->twig->render($filepath, $context);
+        return $this->twig->render($templateName, (array) $data);
         // $finder = new Finder();
         // $finder->in($appTemplatePath)->depth('== 0');
         // foreach ($finder as $file) {

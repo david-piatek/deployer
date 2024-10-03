@@ -6,16 +6,22 @@ namespace App\Application;
 
 use App\Domain\Gateway\Template;
 
-class DeployCommandHandler
+readonly class DeployCommandHandler
 {
     public function __construct(
+        private Template $template,
     ) {
     }
 
     public function handle(DeployCommand $command): void
     {
-        // Validate directory structure
-        // Validate data
+        foreach ($command->templates as $templateName => $template) {
+            $this->template->render(
+                templateName: $templateName,
+                data: $command->data
+            );
+        }
+
         // apply template -> write output file tmp
         // git clone
         // rm dir
