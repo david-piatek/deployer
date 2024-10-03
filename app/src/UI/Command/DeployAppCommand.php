@@ -32,6 +32,7 @@ class DeployAppCommand extends Command
     {
         /** @var string $appName */
         $appName = $input->getArgument('app_name');
+
         $this->handler->handle(
             new DeployCommand($appName)
         );

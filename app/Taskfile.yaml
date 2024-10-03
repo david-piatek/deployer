@@ -1,0 +1,47 @@
+# https://github.com/my-little-legend-org/installer/blob/main/ops/docker/Taskfile.yaml
+version: '3'
+
+silent: true
+dotenv:
+  - .env
+
+tasks:
+  init:
+    desc: Initialize environment
+    cmds:
+      - echo init
+
+  php-cs:
+    desc: php-cs-fixer check
+    cmds:
+      - ./vendor/bin/php-cs-fixer fix -v --dry-run --diff
+
+  php-cs-fix:
+    desc: php-cs-fixer fix
+    cmds:
+      - ./vendor/bin/php-cs-fixer fix -v --diff
+
+  phpstan:
+    desc: Run phpstan
+    cmds:
+      - ./vendor/bin/phpstan analyse
+
+  phpstan-generate-baseline:
+    desc: Generate phpstan baseline
+    cmds:
+      - ./vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.php
+
+  phpunit:
+    desc: Run unit test
+    cmds:
+      - ./vendor/bin/phpunit tests
+
+  run:
+    desc: Run application
+    cmds:
+      - php bin/console app:deploy {{.CLI_ARGS}}
+
+  default:
+    desc: default
+    cmds:
+      - task --list-all
