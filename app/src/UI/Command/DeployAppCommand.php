@@ -19,16 +19,18 @@ class DeployAppCommand extends Command
 {
     public function __construct(
         private readonly DeployCommandHandler $handler,
+        private readonly string $tmpPath,
+        private readonly string $templatePath,
     ) {
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var string $appName */
-        $appName = $input->getArgument('app_name');
-        // TODO Validate directory structure
+        echo $this->tmpPath;
+        echo $this->templatePath;
 
+        // TODO Validate directory structure
         $data = new Data(
             appName: 'appName',
             environment: 'environment',
@@ -46,7 +48,7 @@ class DeployAppCommand extends Command
                 templates: [],
             )
         );
-        (new SymfonyStyle($input, $output))->title('Finish deploy.'.$appName);
+        (new SymfonyStyle($input, $output))->title('Finish deploy.'.$data->appName);
 
         return Command::SUCCESS;
     }

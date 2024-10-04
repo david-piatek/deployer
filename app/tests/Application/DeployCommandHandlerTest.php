@@ -6,23 +6,17 @@ namespace Tests\App\Application;
 
 use App\Application\DeployCommand;
 use App\Application\DeployCommandHandler;
+use App\Domain\Exception\TemplatingException;
 use App\Domain\Gateway\Template;
 use App\Domain\Model\Data;
 use PHPUnit\Framework\TestCase;
 
 final class DeployCommandHandlerTest extends TestCase
 {
-    private Template $template;
     private Data $data;
 
     protected function setUp(): void
     {
-        $this->template = new class implements Template {
-            public function render(string $templateName, Data $data): string
-            {
-                return 'fff';
-            }
-        };
         $this->data = new Data(
             appName: 'appName',
             environment: 'environment',
@@ -39,31 +33,32 @@ final class DeployCommandHandlerTest extends TestCase
     {
         $command = new DeployCommand(
             data: $this->data,
-            templates: []
+            templates: ['']
         );
-        $handler = new DeployCommandHandler($this->template);
-        try {
-            $handler->handle($command);
-            $this->assertTrue(true);
-        } catch (\Throwable $e) {
-            // TODO remove
-            $this->fail('An unexpected exception was thrown: '.$e->getMessage());
-        }
+        $handler = new DeployCommandHandler(
+            template: new class implements Template {
+                public function render(string $templateName, Data $data): string
+                {
+                    return '';
+                }
+            });
+        $handler->handle($command);
+        $this->assertTrue(true);
     }
 
     public function testDeployCommandHandlerGIVENinvalidInputTHENreturnVoid(): void
     {
-        $appName = 'toto';
         $command = new DeployCommand(
             data: $this->data,
-            templates: []);
-        $handler = new DeployCommandHandler($this->template);
-        try {
-            $handler->handle($command);
-            $this->assertTrue(true);
-        } catch (\Throwable $e) {
-            // TODO remove
-            $this->fail('An unexpected exception was thrown: '.$e->getMessage());
-        }
+            templates: ['']);
+        $handler = new DeployCommandHandler(
+            template: new class implements Template {
+                public function render(string $templateName, Data $data): string
+                {
+                    throw new TemplatingException('ss');
+                }
+            });
+        $this->expectException(TemplatingException::class);
+        $handler->handle($command);
     }
 }

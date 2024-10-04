@@ -17,7 +17,7 @@ readonly class DeployCommandHandler
     {
         foreach ($command->templates as $templateName => $template) {
             $this->template->render(
-                templateName: $templateName,
+                templateName: "$templateName",
                 data: $command->data
             );
         }
