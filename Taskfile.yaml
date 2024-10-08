@@ -1,0 +1,29 @@
+# https://taskfile.dev
+version: '3'
+
+dotenv:
+  - .env
+
+tasks:
+  init:
+    desc: Initialize environment
+    silent: true
+    deps:
+      - task: docker:init
+
+  default:
+    desc: default
+    silent: true
+    cmds:
+      - task --list-all
+
+includes:
+#  docker:
+#    dir: ./ops/docker
+#    taskfile: ./ops/docker/Taskfile.yaml
+#    aliases: [docker]
+
+  app:
+    dir: ./app
+    taskfile: ./app/Taskfile.yaml
+    aliases: [tools]
