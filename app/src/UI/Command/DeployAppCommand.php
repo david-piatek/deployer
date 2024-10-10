@@ -12,7 +12,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 // the name of the command is what users type after "php bin/console"
 #[AsCommand(name: 'app:deploy')]
@@ -20,7 +21,8 @@ class DeployAppCommand extends Command
 {
     public function __construct(
         private readonly DeployCommandHandler $handler,
-        private readonly Serializer $serializer,
+        private readonly SerializerInterface $serializer,
+        private readonly string $tmpPath,
     ) {
         parent::__construct();
     }
@@ -42,12 +44,20 @@ class DeployAppCommand extends Command
 
         */
 
-        $dataInputCommand = file_get_contents('toto');
-        $data = $this->serializer->deserialize($dataInputCommand, Data::class, 'json');
+        $dataInputCommand = file_get_contents($this->tmpPath.DIRECTORY_SEPARATOR.'data.json');
+        try {
+            $data = $this->serializer->deserialize(
+                data: $dataInputCommand,
+                type: Data::class,
+                format: JsonEncoder::FORMAT
+            );
+        } catch (\Throwable $exception) {
+            dd($exception);
+        }
         $this->handler->handle(
             command: new DeployCommand(
                 data: $data,
-                templates: [],
+                templates: [""],
             )
         );
         (new SymfonyStyle($input, $output))->title('Finish deploy.'.$data->appName);
