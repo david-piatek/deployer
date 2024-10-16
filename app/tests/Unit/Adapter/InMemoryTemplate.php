@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Unit\Adapter;
 
-use App\Application\Input\Data;
 use App\Domain\Gateway\Template;
+use App\Domain\Struct\Data;
 
 final class InMemoryTemplate implements Template
 {

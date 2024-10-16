@@ -19,6 +19,15 @@ final class DataFactory extends ObjectFactory
 
     protected function defaults(): array|callable
     {
-        return [];
+        return [
+            'appName' => 'appName',
+            'environment' => 'environment',
+            'namespace' => 'namespace',
+            'url' => 'url',
+            'tag' => 'tag',
+            'imagePullSecrets' => 'imagePullSecrets',
+            'inputPort' => 12,
+            'outputPort' => 23,
+        ];
     }
 }

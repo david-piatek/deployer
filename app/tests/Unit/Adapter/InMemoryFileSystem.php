@@ -12,4 +12,14 @@ final class InMemoryFileSystem implements FileSystem
     {
         return true;
     }
+
+    public function remove(string $path): bool
+    {
+        return true;
+    }
+
+    public function mkdir(string $path, bool $force = false): bool
+    {
+        return true;
+    }
 }

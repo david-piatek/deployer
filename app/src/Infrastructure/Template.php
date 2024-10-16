@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Application\Input\Data;
 use App\Domain\Gateway\Template as TemplateDomainInterface;
+use App\Domain\Struct\Data;
 use Twig\Environment;
 
 class Template implements TemplateDomainInterface

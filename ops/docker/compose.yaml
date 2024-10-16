@@ -1,0 +1,13 @@
+services:
+  php:
+    build:
+      context: ./php-fpm
+      dockerfile: Dockerfile
+      target: dev
+      # Allow to update user uid on container
+      args:
+        HOST_UID: ${HOST_UID:-1000}
+    volumes:
+      - ../../app:/usr/src/myapp:rw
+    extra_hosts:
+      - host.docker.internal:host-gateway

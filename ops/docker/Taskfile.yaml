@@ -13,14 +13,3 @@ tasks:
     desc: default
     cmds:
       - task --list-all
-
-includes:
-  docker:
-    dir: ./ops/docker
-    taskfile: ./ops/docker/Taskfile.yaml
-    aliases: [docker]
-
-  app:
-    dir: ./app
-    taskfile: ./app/Taskfile.yaml
-    aliases: [app]

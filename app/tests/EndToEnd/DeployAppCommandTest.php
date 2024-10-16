@@ -2,29 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Command;
+namespace Tests\App\EndToEnd;
 
-use App\Application\DeployCommand;
-use App\Application\DeployCommandHandler;
-use App\Application\Input\Data;
-use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-// the name of the command is what users type after "php bin/console"
-#[AsCommand(name: 'app:deploy')]
-class DeployAppCommand extends Command
+class DeployAppCommandTest extends KernelTestCase
 {
     public function __construct(
         private readonly DeployCommandHandler $handler,
         private readonly SerializerInterface $serializer,
         private readonly string $tmpPath,
     ) {
-        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -51,13 +39,13 @@ class DeployAppCommand extends Command
                 type: Data::class,
                 format: JsonEncoder::FORMAT
             );
-        } catch (\Throwable $exception) {
+        } catch (InvalidDataException $exception) {
             dd($exception);
         }
         $this->handler->handle(
             command: new DeployCommand(
                 data: $data,
-                templates: [""],
+                templates: [''],
             )
         );
         (new SymfonyStyle($input, $output))->title('Finish deploy.'.$data->appName);

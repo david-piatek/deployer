@@ -3,7 +3,6 @@ version: '3'
 
 silent: true
 
-
 tasks:
   init:
     desc: Initialize environment
@@ -35,7 +34,7 @@ tasks:
   phpunit:
     desc: Run unit test
     cmds:
-      - ./vendor/bin/phpunit --testdox-text features.txt
+      - ./vendor/bin/phpunit --coverage-text --testdox-text features.txt
 
   tests:
     desc: Run all tests

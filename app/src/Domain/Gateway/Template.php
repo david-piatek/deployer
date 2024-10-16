@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gateway;
 
-use App\Application\Input\Data;
+use App\Domain\Struct\Data;
 
 interface Template
 {

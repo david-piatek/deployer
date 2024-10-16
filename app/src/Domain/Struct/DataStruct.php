@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Input;
+namespace App\Domain\Struct;
 
-readonly class Data
+readonly class DataStruct
 {
     public function __construct(
         public string $appName,

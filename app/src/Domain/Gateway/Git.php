@@ -6,7 +6,12 @@ namespace App\Domain\Gateway;
 
 interface Git
 {
-    public function clone(string $url, string $destPath): bool;
+    public function clone(
+        string $url,
+        string $destPath,
+    ): bool;
 
-    public function push(string $repoName): bool;
+    public function push(
+        string $repoName,
+    ): bool;
 }

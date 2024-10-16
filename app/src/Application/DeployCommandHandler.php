@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use App\Domain\Exception\NoTemplateException;
-use App\Domain\Exception\TemplateNotFoundException;
-use App\Domain\Gateway\FileSystem;
 use App\Domain\Gateway\Git;
 use App\Domain\Gateway\Template;
+use App\Domain\Model\FileSystem;
+use App\Domain\Struct\DataStruct;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 readonly class DeployCommandHandler
 {
@@ -16,17 +17,24 @@ readonly class DeployCommandHandler
         private Template $template,
         private FileSystem $fs,
         private Git $git,
+        private SerializerInterface $serializer,
         private string $tmpPath,
     ) {
     }
 
     public function handle(DeployCommand $command): void
     {
-        $data = $command->data;
-        $templates = $command->templates;
-        if (empty($templates)) {
-            throw new NoTemplateException();
-        }
+        $appName = $command->appName;
+
+        $files = $this->fs->getFilesContent($this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
+
+        $data = $this->serializer->deserialize(
+            data: $files['data'],
+            type: DataStruct::class,
+            format: JsonEncoder::FORMAT
+        );
+
+        dd($data);
 
         $destPat = 'toto';
         $repoPath = $this->tmpPath;

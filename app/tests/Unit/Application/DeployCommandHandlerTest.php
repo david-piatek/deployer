@@ -6,12 +6,12 @@ namespace Tests\App\Unit\Application;
 
 use App\Application\DeployCommand;
 use App\Application\DeployCommandHandler;
-use App\Application\Input\Data;
-use App\Domain\Exception\NoTemplateException;
-use App\Domain\Exception\TemplateNotFoundException;
+use App\Domain\Exception\FileSystem\NoTemplateException;
+use App\Domain\Exception\FileSystem\TemplateNotFoundException;
 use App\Domain\Gateway\FileSystem;
 use App\Domain\Gateway\Git;
 use App\Domain\Gateway\Template;
+use App\Domain\Struct\Data;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Tests\App\Unit\Adapter\InMemoryFileSystem;
