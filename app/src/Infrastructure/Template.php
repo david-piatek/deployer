@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure;
 
 use App\Domain\Gateway\Template as TemplateDomainInterface;
-use App\Domain\Struct\Data;
+use App\Domain\ValueObject\DataVO;
 use Twig\Environment;
 
 class Template implements TemplateDomainInterface
@@ -15,7 +15,7 @@ class Template implements TemplateDomainInterface
     ) {
     }
 
-    public function render(string $templateName, Data $data): string
+    public function render(string $templateName, DataVO $data): string
     {
         return $this->twig->render($templateName, (array) $data);
         // $finder = new Finder();

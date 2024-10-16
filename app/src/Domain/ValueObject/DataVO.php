@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Struct;
+namespace App\Domain\ValueObject;
 
-readonly class DataStruct
+readonly class DataVO
 {
     public function __construct(
         public string $appName,

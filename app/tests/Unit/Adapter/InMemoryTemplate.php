@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Unit\Adapter;
 
 use App\Domain\Gateway\Template;
-use App\Domain\Struct\Data;
+use App\Domain\ValueObject\Data;
 
 final class InMemoryTemplate implements Template
 {

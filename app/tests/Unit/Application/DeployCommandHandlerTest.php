@@ -11,7 +11,7 @@ use App\Domain\Exception\FileSystem\TemplateNotFoundException;
 use App\Domain\Gateway\FileSystem;
 use App\Domain\Gateway\Git;
 use App\Domain\Gateway\Template;
-use App\Domain\Struct\Data;
+use App\Domain\ValueObject\Data;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Tests\App\Unit\Adapter\InMemoryFileSystem;

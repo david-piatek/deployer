@@ -7,7 +7,7 @@ namespace App\Application;
 use App\Domain\Gateway\Git;
 use App\Domain\Gateway\Template;
 use App\Domain\Model\FileSystem;
-use App\Domain\Struct\DataStruct;
+use App\Domain\ValueObject\DataVO;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -25,12 +25,11 @@ readonly class DeployCommandHandler
     public function handle(DeployCommand $command): void
     {
         $appName = $command->appName;
-
         $files = $this->fs->getFilesContent($this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
 
         $data = $this->serializer->deserialize(
-            data: $files['data'],
-            type: DataStruct::class,
+            data: $files->data,
+            type: DataVO::class,
             format: JsonEncoder::FORMAT
         );
 

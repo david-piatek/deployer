@@ -6,6 +6,7 @@ namespace App\Domain\Model;
 
 use App\Domain\Exception\FileSystemException;
 use App\Domain\Gateway\FileSystem as FileSystemInterface;
+use App\Domain\ValueObject\DirectoryDataVO;
 use Symfony\Component\Finder\Finder;
 
 class FileSystem
@@ -18,7 +19,7 @@ class FileSystem
     ) {
     }
 
-    public function getFilesContent(string $path): array
+    public function getFilesContent(string $path): DirectoryDataVO
     {
         $this->checkFileStructure($path);
         $filesContents = [];
@@ -28,7 +29,7 @@ class FileSystem
             $filesContents['templates'][] = $this->fs->getFileContent($fileName->getPathname());
         }
 
-        return $filesContents;
+        return new DirectoryDataVO($filesContents['data'], $filesContents['templates']);
     }
 
     public function checkFileStructure(string $path): void
