@@ -10,7 +10,6 @@ use App\Domain\Gateway\Template;
 use App\Domain\Model\FileSystem;
 use App\Domain\ValueObject\DataVO;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\SerializerInterface;
 
 readonly class DeployCommandHandler
 {
@@ -33,13 +32,13 @@ readonly class DeployCommandHandler
             type: DataVO::class,
             format: JsonEncoder::FORMAT
         );
-        dd($files);
+
+        $gitAppDiR = $this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR;
+
+        $this->fs->remove($gitAppDiR);
 
         $this->fs->remove($this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
-
-
-
-        //
+        dd($files, $data);
 
         $destPat = 'toto';
         $repoPath = $this->tmpPath;
