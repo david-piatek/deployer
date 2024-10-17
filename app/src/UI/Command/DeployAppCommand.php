@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure;
+namespace App\UI\Command;
 
 use App\Application\DeployCommand;
 use App\Application\DeployCommandHandler;
@@ -27,7 +27,7 @@ class DeployAppCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument(self::APP_NAME, InputArgument::OPTIONAL, 'The version to create (eg: 1.29.6).');
+        $this->addArgument(self::APP_NAME, InputArgument::OPTIONAL, 'The appname to create.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -37,7 +37,7 @@ class DeployAppCommand extends Command
 
         if (null === $appName) {
             $appName = $io->ask(
-                question: 'What version do ou want to create ? It should follow the pattern x.x.x',
+                question: 'What app name do you want to create ?',
                 validator: fn (string $appName): string => $appName
             );
         }

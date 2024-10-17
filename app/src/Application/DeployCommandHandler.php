@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Domain\Gateway\DataVOSerializer;
 use App\Domain\Gateway\Git;
 use App\Domain\Gateway\Template;
 use App\Domain\Model\FileSystem;
@@ -17,7 +18,7 @@ readonly class DeployCommandHandler
         private Template $template,
         private FileSystem $fs,
         private Git $git,
-        private SerializerInterface $serializer,
+        private DataVOSerializer $serializer,
         private string $tmpPath,
     ) {
     }
@@ -32,8 +33,13 @@ readonly class DeployCommandHandler
             type: DataVO::class,
             format: JsonEncoder::FORMAT
         );
+        dd($files);
 
-        dd($data);
+        $this->fs->remove($this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
+
+
+
+        //
 
         $destPat = 'toto';
         $repoPath = $this->tmpPath;
