@@ -42,7 +42,7 @@ class FileSystemModel
             throw new FileSystemException("File data not found at $path"); // TODO specify Exception
         }
     }
-    
+
     public function mkdir(string $path, bool $force = false): bool
     {
         if (false === $this->fs->exists($path) && true === $force) {
@@ -54,12 +54,12 @@ class FileSystemModel
         return true;
     }
 
-    private function exists(string $path): bool
+    public function exists(string $path): bool
     {
         return $this->fs->exists($path);
     }
 
-    private function remove(string $path): void
+    public function remove(string $path): void
     {
         $this->fs->remove($path);
     }
