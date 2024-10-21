@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Unit\Adapter;
 
-use App\Domain\Gateway\Template;
+use App\Domain\Gateway\TemplateDomainInterface;
 use App\Domain\ValueObject\Data;
 
-final class InMemoryTemplate implements Template
+final class InMemoryTemplateDomainInterface implements TemplateDomainInterface
 {
     public function render(string $templateName, Data $data): string
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gateway;
 
-interface Git
+interface GitDomainInterface
 {
     public function clone(
         string $url,

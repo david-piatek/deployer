@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Domain\Gateway\Template as TemplateDomainInterface;
+use App\Domain\Gateway\TemplateDomainInterface as TemplateDomainInterface;
 use App\Domain\ValueObject\DataVO;
 use Twig\Environment;
 
-class Template implements TemplateDomainInterface
+class TemplateInfrastructure implements TemplateDomainInterface
 {
     public function __construct(
         private readonly Environment $twig,

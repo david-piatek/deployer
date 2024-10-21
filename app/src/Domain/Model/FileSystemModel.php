@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace App\Domain\Model;
 
 use App\Domain\Exception\FileSystemException;
-use App\Domain\Gateway\FileSystem as FileSystemInterface;
+use App\Domain\Gateway\FileSystemDomainInterface;
 use App\Domain\ValueObject\DirectoryDataVO;
-use Symfony\Component\Finder\Finder;
 
-class FileSystem
+class FileSystemModel
 {
     private const DATA_FILENAME = 'data.json';
     private const TEMPLATE_DIRNAME = 'templates';
 
     public function __construct(
-        private readonly FileSystemInterface $fs,
+        private readonly FileSystemDomainInterface $fs,
     ) {
     }
 
@@ -24,9 +23,8 @@ class FileSystem
         $this->checkFileStructure($path);
         $filesContents = [];
         $filesContents['data'] = $this->fs->getFileContent($path.self::DATA_FILENAME);
-        $finder = new Finder();
-        foreach ($finder->files()->in($path.self::TEMPLATE_DIRNAME) as $fileName) {
-            $filesContents['templates'][] = $this->fs->getFileContent($fileName->getPathname());
+        foreach ($this->fs->getFilesInDirectory($path.self::TEMPLATE_DIRNAME) as $file) {
+            $filesContents['templates'][] = $file->content;
         }
 
         return new DirectoryDataVO($filesContents['data'], $filesContents['templates']);
@@ -50,9 +48,9 @@ class FileSystem
         return $this->fs->exists($path);
     }
 
-    public function remove(string $path): bool
+    public function remove(string $path): void
     {
-        return $this->fs->remove($path);
+        $this->fs->remove($path);
     }
 
     public function mkdir(string $path, bool $force = false): bool
@@ -64,10 +62,5 @@ class FileSystem
         $this->fs->mkdir($path);
 
         return true;
-    }
-
-    public function getFileContent(string $path): string
-    {
-        return $this->fs->getFileContent($path);
     }
 }

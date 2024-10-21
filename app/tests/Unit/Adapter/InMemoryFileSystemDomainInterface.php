@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Unit\Adapter;
 
-use App\Domain\Gateway\FileSystem;
+use App\Domain\Gateway\FileSystemDomainInterface;
 
-final class InMemoryFileSystem implements FileSystem
+final class InMemoryFileSystemDomainInterface implements FileSystemDomainInterface
 {
     public function exists(string $path): bool
     {

@@ -9,6 +9,11 @@ tasks:
     deps:
       - task: docker:init
 
+  up:
+    desc: Initialize environment
+    cmds:
+      - docker compose up
+
   default:
     desc: default
     cmds:

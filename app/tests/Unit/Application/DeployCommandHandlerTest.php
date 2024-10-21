@@ -8,22 +8,22 @@ use App\Application\DeployCommand;
 use App\Application\DeployCommandHandler;
 use App\Domain\Exception\FileSystem\NoTemplateException;
 use App\Domain\Exception\FileSystem\TemplateNotFoundException;
-use App\Domain\Gateway\FileSystem;
-use App\Domain\Gateway\Git;
-use App\Domain\Gateway\Template;
+use App\Domain\Gateway\FileSystemDomainInterface;
+use App\Domain\Gateway\GitDomainInterface;
+use App\Domain\Gateway\TemplateDomainInterface;
 use App\Domain\ValueObject\Data;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
-use Tests\App\Unit\Adapter\InMemoryFileSystem;
-use Tests\App\Unit\Adapter\InMemoryGit;
-use Tests\App\Unit\Adapter\InMemoryTemplate;
+use Tests\App\Unit\Adapter\InMemoryFileSystemDomainInterface;
+use Tests\App\Unit\Adapter\InMemoryGitDomainInterface;
+use Tests\App\Unit\Adapter\InMemoryTemplateDomainInterface;
 
 final class DeployCommandHandlerTest extends TestCase
 {
     private Data $data;
-    private Template $template;
-    private Git $git;
-    private FileSystem $fs;
+    private TemplateDomainInterface $template;
+    private GitDomainInterface $git;
+    private FileSystemDomainInterface $fs;
 
     protected function setUp(): void
     {
@@ -37,9 +37,9 @@ final class DeployCommandHandlerTest extends TestCase
             inputPort: 12,
             outputPort: 23,
         );
-        $this->template = new InMemoryTemplate();
-        $this->git = new InMemoryGit();
-        $this->fs = new InMemoryFileSystem();
+        $this->template = new InMemoryTemplateDomainInterface();
+        $this->git = new InMemoryGitDomainInterface();
+        $this->fs = new InMemoryFileSystemDomainInterface();
     }
 
     #[TestDox('Scenario: handler run correctly

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Domain\Gateway\Git as GitInterface;
+use App\Domain\Gateway\GitDomainInterface;
 
-class Git implements GitInterface
+class GitInfrastructure implements GitDomainInterface
 {
+
+
     public function clone(string $url, string $destPath): bool
     {
         dd('clone');

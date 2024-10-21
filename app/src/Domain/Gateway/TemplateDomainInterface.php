@@ -6,7 +6,7 @@ namespace App\Domain\Gateway;
 
 use App\Domain\ValueObject\DataVO;
 
-interface Template
+interface TemplateDomainInterface
 {
     public function render(
         string $templateName,

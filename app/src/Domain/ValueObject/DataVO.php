@@ -7,6 +7,7 @@ namespace App\Domain\ValueObject;
 readonly class DataVO
 {
     public function __construct(
+        public string $gitRepoUrl,
         public string $appName,
         public string $environment,
         public string $namespace,

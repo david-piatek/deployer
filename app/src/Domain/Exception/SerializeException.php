@@ -6,8 +6,8 @@ namespace App\Domain\Exception;
 
 class SerializeException extends \RuntimeException
 {
-    public function __construct()
+    public function __construct($message)
     {
-        parent::__construct('Serialization error');
+        parent::__construct($message);
     }
 }

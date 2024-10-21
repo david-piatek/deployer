@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use App\Domain\Gateway\DataVOSerializer;
-use App\Domain\Gateway\Git;
-use App\Domain\Gateway\Template;
-use App\Domain\Model\FileSystem;
+use App\Domain\Gateway\DataVOSerializerDomainInterface;
+use App\Domain\Gateway\GitDomainInterface;
+use App\Domain\Gateway\TemplateDomainInterface;
+use App\Domain\Model\FileSystemModel;
 use App\Domain\ValueObject\DataVO;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 readonly class DeployCommandHandler
 {
     public function __construct(
-        private Template $template,
-        private FileSystem $fs,
-        private Git $git,
-        private DataVOSerializer $serializer,
-        private string $tmpPath,
+        private TemplateDomainInterface         $template,
+        private FileSystemModel                 $fs,
+        private GitDomainInterface              $git,
+        private DataVOSerializerDomainInterface $serializer,
+        private string                          $tmpPath,
+        private string                          $gitDiR,
     ) {
     }
 
@@ -33,21 +34,14 @@ readonly class DeployCommandHandler
             format: JsonEncoder::FORMAT
         );
 
-        $gitAppDiR = $this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR;
+        echo $this->gitDiR;
+        $this->fs->remove($this->gitDiR);
 
-        $this->fs->remove($gitAppDiR);
+        $this->fs->remove($this->gitDiR.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
+        $this->git->clone($data->gitRepoUrl, $this->gitDiR);
 
-        $this->fs->remove($this->tmpPath.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
-        dd($files, $data);
 
-        $destPat = 'toto';
-        $repoPath = $this->tmpPath;
-        $tmpDestPath = $this->tmpPath;
 
-        // rm if $destPat exist
-        // rm if $tmpDestPat exist
-
-        // rm -rf "${ROOT_PATH}/../deployer"
         // git clone https://${REPO_ACCESS_TOKEN}@github.com/david-piatek/au_fil_du_fish_deployer.git ${ROOT_PATH}/../deployer
         // rm -rf  ${dest_path} || true;
         // mkdir -p  ${dest_path} || true;

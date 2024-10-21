@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Unit\Adapter;
 
-use App\Domain\Gateway\Git;
+use App\Domain\Gateway\GitDomainInterface;
 
-final class InMemoryGit implements Git
+final class InMemoryGitDomainInterface implements GitDomainInterface
 {
     public function clone(string $url, string $destPath): bool
     {
