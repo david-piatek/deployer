@@ -19,15 +19,14 @@ readonly class DataVOSerializerInfrastructure implements DataVOSerializerDomainI
 
     public function deserialize(mixed $data, string $type, string $format, array $context = []): DataVO
     {
-        try{
+        try {
             return $this->serializer->deserialize(
                 data: $data,
                 type: DataVO::class,
                 format: JsonEncoder::FORMAT
             );
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             throw new SerializeException($e->getMessage());
         }
-
     }
 }

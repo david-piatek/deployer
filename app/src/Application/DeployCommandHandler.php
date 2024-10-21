@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Domain\Exception\TemplatingException;
 use App\Domain\Gateway\DataVOSerializerDomainInterface;
-use App\Domain\Gateway\GitDomainInterface;
 use App\Domain\Gateway\TemplateDomainInterface;
 use App\Domain\Model\FileSystemModel;
+use App\Domain\Model\GitModel;
 use App\Domain\ValueObject\DataVO;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 readonly class DeployCommandHandler
 {
     public function __construct(
-        private TemplateDomainInterface         $template,
-        private FileSystemModel                 $fs,
-        private GitDomainInterface              $git,
+        private TemplateDomainInterface $template,
+        private FileSystemModel $fs,
+        private GitModel $git,
         private DataVOSerializerDomainInterface $serializer,
-        private string                          $tmpPath,
-        private string                          $gitDiR,
+        private string $tmpPath,
+        private string $gitDiR,
     ) {
     }
 
@@ -34,27 +35,20 @@ readonly class DeployCommandHandler
             format: JsonEncoder::FORMAT
         );
 
-        echo $this->gitDiR;
-        $this->fs->remove($this->gitDiR);
-
-        $this->fs->remove($this->gitDiR.DIRECTORY_SEPARATOR.$appName.DIRECTORY_SEPARATOR);
         $this->git->clone($data->gitRepoUrl, $this->gitDiR);
-
-
 
         // git clone https://${REPO_ACCESS_TOKEN}@github.com/david-piatek/au_fil_du_fish_deployer.git ${ROOT_PATH}/../deployer
         // rm -rf  ${dest_path} || true;
         // mkdir -p  ${dest_path} || true;
 
-        $this->git->clone($data->appName, $tmpDestPath);
-        foreach ($command->templates as $templateName => $template) {
-            if ($this->fs->exists($template)) {
+        foreach ($files->templates as $template) {
+            try{
                 $this->template->render(
-                    templateName: "$templateName",
-                    data: $command->data
+                    templateName: $template->name,
+                    data: $data
                 );
-            } else {
-                throw new TemplateNotFoundException($template);
+            } catch (\Exception $exception) {
+                throw new TemplatingException($template->name. " : ".$exception->getMessage() );
             }
         }
         // cd ${dest_path}

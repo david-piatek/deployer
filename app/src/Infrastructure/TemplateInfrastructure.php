@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Domain\Gateway\TemplateDomainInterface as TemplateDomainInterface;
+use App\Domain\Gateway\TemplateDomainInterface;
 use App\Domain\ValueObject\DataVO;
 use Twig\Environment;
 

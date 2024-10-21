@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-zip": "*",
+        "czproject/git-php": "^4.3",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
         "symfony/finder": "7.1.*",
