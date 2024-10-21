@@ -22,7 +22,7 @@ class GitInfrastructure implements GitDomainInterface
      */
     public function clone(string $url, string $destPath): bool
     {
-        $this->git->cloneRepository($destPath, $url);
+        $this->git->cloneRepository($url, $destPath);
         dd('clone');
 
         return true;

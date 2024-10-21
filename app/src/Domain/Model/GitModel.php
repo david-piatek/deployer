@@ -12,6 +12,7 @@ readonly class GitModel
     public function __construct(
         private FileSystemModel $fileSystem,
         private GitDomainInterface $git,
+        private string $personalAccessToken
     ) {
     }
 
@@ -19,7 +20,10 @@ readonly class GitModel
     {
         $this->fileSystem->remove($destPath);
         try {
+            $url = "https://oauth2:$this->personalAccessToken@github.com/david-piatek/au_fil_du_fish_deployer.git";
+            echo $url;
             $this->git->clone($url, $destPath);
+            dd('dd');
 
         }catch (\Throwable $exception){
             throw new GitException($exception->getMessage());
