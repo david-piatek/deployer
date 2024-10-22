@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
-readonly class DataVO
+readonly class RepoVO
 {
     public function __construct(
-        public string $gitConnexionType,
-        public string $gitProvider,
-        public string $gitRepoRemotePath,
+        public string $gitRepoUrl,
         public string $appName,
         public string $environment,
         public string $namespace,

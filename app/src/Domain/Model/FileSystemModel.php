@@ -39,7 +39,7 @@ class FileSystemModel
         }
 
         if (false === $this->exists($path.self::DATA_FILENAME)) {
-            throw new FileSystemException("File data not found at $path"); // TODO specify Exception
+            throw new FileSystemException("File data not found at $path");
         }
     }
 

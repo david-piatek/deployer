@@ -1,4 +1,4 @@
-FROM php:8.4-alpine AS dev
+FROM php:8.3-cli-alpine AS dev
 
 ARG HOST_UID=501
 
@@ -11,7 +11,7 @@ RUN docker-php-ext-install zip pcntl gmp
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 
 # Install Xdebug
-RUN pecl install xdebug-3.2.1 \
+RUN pecl install xdebug-3.3.0 \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini

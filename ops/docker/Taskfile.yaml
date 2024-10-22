@@ -9,10 +9,15 @@ tasks:
     deps:
       - task: docker:init
 
-  up:
-    desc: Initialize environment
+  build:
+    desc: Build app
     cmds:
-      - docker compose up
+      - docker compose build
+
+  run:
+    desc: Run app
+    cmds:
+      - docker compose run --rm php bash
 
   default:
     desc: default

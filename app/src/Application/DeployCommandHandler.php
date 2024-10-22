@@ -35,20 +35,20 @@ readonly class DeployCommandHandler
             format: JsonEncoder::FORMAT
         );
 
-        $this->git->clone($data->gitRepoUrl, $this->gitDiR);
+        dd($this->git->getConnexionString($data->gitConnexionType, $data->gitProvider, $data->gitRepoRemotePath));
+        $repo = $this->git->clone($data->gitRepoUrl, $this->gitDiR);
 
-        // git clone https://${REPO_ACCESS_TOKEN}@github.com/david-piatek/au_fil_du_fish_deployer.git ${ROOT_PATH}/../deployer
         // rm -rf  ${dest_path} || true;
         // mkdir -p  ${dest_path} || true;
 
         foreach ($files->templates as $template) {
-            try{
+            try {
                 $this->template->render(
                     templateName: $template->name,
                     data: $data
                 );
             } catch (\Exception $exception) {
-                throw new TemplatingException($template->name. " : ".$exception->getMessage() );
+                throw new TemplatingException($template->name.' : '.$exception->getMessage());
             }
         }
         // cd ${dest_path}
