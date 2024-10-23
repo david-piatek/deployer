@@ -22,25 +22,26 @@ class GitInfrastructure implements GitDomainInterface
     /**
      * @throws GitException
      */
-    public function clone(string $url, string $destPath): RepoVO
+    public function clone(string $url, string $destPath): bool
     {
         $repo = $this->git->cloneRepository($url, $destPath);
-        $repo = new RepoVO();
         // map repo lib to repo in domain
         dd('clone');
+        return true;
+
 
         //         return repoDomain;
-        return $repo;
     }
 
-    public function add(RepoVO $repo, array $files): RepoVO
+    public function add(array $files): bool
     {
         return true;
     }
 
     // public function push(repoDomain $repo): bool
-    public function push(RepoVO $repo): RepoVO
+    public function push(string $repoPath): bool
     {
         return true;
+
     }
 }

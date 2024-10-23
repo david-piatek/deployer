@@ -6,19 +6,18 @@ namespace App\Domain\Gateway;
 
 use App\Domain\ValueObject\RepoVO;
 
-interface GitDomainInterface
+interface   GitDomainInterface
 {
     public function clone(
         string $url,
         string $destPath,
-    ): RepoVO;
+    ): bool;
 
     public function add(
-        RepoVO $repo,
         array $files,
-    ): RepoVO;
+    ): bool;
 
     public function push(
-        RepoVO $repo,
-    ): RepoVO;
+        string $repoPath,
+    ): bool;
 }

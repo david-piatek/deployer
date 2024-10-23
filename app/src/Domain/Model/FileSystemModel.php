@@ -30,19 +30,6 @@ class FileSystemModel
         return new DirectoryDataVO($filesContents['data'], $filesContents['templates']);
     }
 
-    public function checkFileStructure(string $path): void
-    {
-        foreach ([$path, $path.self::DATA_FILENAME, $path.self::TEMPLATE_DIRNAME] as $item) {
-            if (false === $this->exists($item)) {
-                throw new FileSystemException("Not found at $item");
-            }
-        }
-
-        if (false === $this->exists($path.self::DATA_FILENAME)) {
-            throw new FileSystemException("File data not found at $path");
-        }
-    }
-
     public function mkdir(string $path, bool $force = false): bool
     {
         if (false === $this->fs->exists($path) && true === $force) {
@@ -62,5 +49,17 @@ class FileSystemModel
     public function remove(string $path): void
     {
         $this->fs->remove($path);
+    }
+    private function checkFileStructure(string $path): void
+    {
+        foreach ([$path, $path.self::DATA_FILENAME, $path.self::TEMPLATE_DIRNAME] as $item) {
+            if (false === $this->exists($item)) {
+                throw new FileSystemException("Not found at $item");
+            }
+        }
+
+        if (false === $this->exists($path.self::DATA_FILENAME)) {
+            throw new FileSystemException("File data not found at $path");
+        }
     }
 }

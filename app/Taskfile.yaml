@@ -31,10 +31,11 @@ tasks:
     cmds:
       - ./vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.php
 
-  phpunit:
+  tests-unit:
     desc: Run unit test
     cmds:
-      - ./vendor/bin/phpunit --coverage-text --testdox-text features.txt
+      - ./vendor/bin/phpunit --testsuite Unit
+#      - ./vendor/bin/phpunit --testsuite Unit --coverage-text --testdox-text  features.txt
 
   tests:
     desc: Run all tests

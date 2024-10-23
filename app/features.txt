@@ -1,16 +1,6 @@
 Deploy Command Handler (Tests\App\Unit\Application\DeployCommandHandler)
- [x] Scenario: handler run correctly
-        GIVEN valid data and valid templates
-        AND Git repo is OK
-        THEN I should not have any error
-    
- [x] Scenario: NoTemplateException
+ [ ] Scenario: NoTemplateException
         GIVEN no template
         THEN I should have a exception NoTemplateException 
-    
- [x] Scenario: TemplateNotFoundException
-        GIVEN some templates
-        WHEN some templates does not exist 
-        THEN I should have TemplateNotFoundException 
     
 
